@@ -39,7 +39,7 @@ public class ActionSelenium {
 		System.out.println(user_value);
 		boolean user_isenabled = user.isEnabled();
 		System.out.println(user_isenabled);
-		//
+
 		//定位用户名密码，并且点击登录按钮
 		user.sendKeys("13998538053");
 		driver.findElement(By.name("password")).sendKeys("ww744934");
@@ -67,9 +67,18 @@ public class ActionSelenium {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		/**
+		 * document.getElementById('J_GotoTop').style.display='none'
+		 * 用JS隐藏右侧遮罩
+		 */	
+		String jsScrip="document.getElementById('J_GotoTop').style.display='none'";
+		//将driver转换成js执行
+		JavascriptExecutor js=(JavascriptExecutor) driver;
+		js.executeScript(jsScrip);
+		
 		//点击‘编辑’按钮进入编辑个人信息页面
 		driver.findElement(By.className("pull-right")).click();
-		WebElement sex_node=driver.findElement(By.className("moco-control-input"));
+		WebElement sex_node=driver.findElement(By.xpath(".//*[@id='setting-profile']/div[2]/a"));
 		//获取元素组，之后通过for循环模式取到值
 		List<WebElement> sex_list=sex_node.findElements(By.tagName("input"));
 		for(WebElement sex:sex_list){
@@ -79,19 +88,26 @@ public class ActionSelenium {
 			}else{
 				sex.click();
 				break;
-			}
-			
+			}			
 		}
-
 	}
-
+	/*
+	 * 复选框操作 */
+	public void checkBox(){
+		WebElement check= driver.findElement(By.id("auto-signin"));
+		System.out.println("是否是选择了呢？"+check.isSelected());
+		System.out.println("是否是可选择的呢？"+check.isEnabled());
+		check.click();
+		System.out.println("是否是选择了呢？"+check.isSelected());
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 		ActionSelenium action = new ActionSelenium();
 		action.InitDriver();
-		action.InputBox();
-		action.RedioBox();
+		action.checkBox();
+		//action.InputBox();
+		//action.RedioBox();
 	}
 
 }
