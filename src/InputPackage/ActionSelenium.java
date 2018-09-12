@@ -92,7 +92,7 @@ public class ActionSelenium {
 		}
 	}
 	/*
-	 * 复选框操作 */
+	 * 复选框操作   clear()方法不适用多选框，只能适用于可编辑输入框*/
 	public void checkBox(){
 		WebElement check= driver.findElement(By.id("auto-signin"));
 		System.out.println("是否是选择了呢？"+check.isSelected());
@@ -100,13 +100,80 @@ public class ActionSelenium {
 		check.click();
 		System.out.println("是否是选择了呢？"+check.isSelected());
 	}
+	/*
+	 * 按钮  isEnabled()方法不适用于Button*/
+	public void button(){
+		WebElement login_button= driver.findElement(By.className("moco-btn"));
+		//模拟手动将登陆按钮隐藏掉
+		String jScript="document.getElementsByClassName('moco-btn')[0].style.display='none'";
+		JavascriptExecutor js=(JavascriptExecutor) driver;
+		js.executeScript(jScript);
+		boolean is_display=login_button.isDisplayed();
+        System.out.println("登录按钮是否显示呢"+is_display);
+        //boolean is_enabled=login_button.isEnabled();
+        //System.out.println(is_enabled);
+		login_button.click();	
+		
+	}
+	/*
+	 * Form表单提交
+	 * 整个登录的Form表单的ID为signup-form*/
+	public void webForm(){
+		
+		driver.findElement(By.id("signup-form")).submit();
+	}
+	/*
+	 * 上传文件*/
+	public void upHeader(){
+		//点击更换头像
+		driver.get("https://www.imooc.com/user/setbindsns");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement click_header=driver.findElement(By.linkText("更换头像"));
+		/*由于更换头像是鼠标悬停时才能显示，此时需要手动将<div class="update-avator" style="bottom: -30px;">
+		 * 中 -30px 改为 0px 才可以直接点击更换头像*/
+		
+		String jScrip="document.getElementsByClassName('update-avator')[0].style.bottom='0'";
+		JavascriptExecutor js= (JavascriptExecutor) driver;
+		js.executeScript(jScrip);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		click_header.click();
+	    try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//点击上传头像并上传
+		driver.findElement(By.id("upload")).sendKeys("F:\\selenium\\示例图片_03.JPG");
+		  try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		//头像上传成功后点击确定按钮
+		driver.findElement(By.linkText("确定")).click();		
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 		ActionSelenium action = new ActionSelenium();
 		action.InitDriver();
-		action.checkBox();
-		//action.InputBox();
+		//action.checkBox();
+		//action.button();
+		action.InputBox();
+		action.upHeader();
+		//action.webForm();
 		//action.RedioBox();
 	}
 
