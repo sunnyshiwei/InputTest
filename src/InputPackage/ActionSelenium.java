@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -62,7 +61,7 @@ public class ActionSelenium {
 	 * <label> <input hidefocus="true" value="2" checked="checked" name="sex"
 	 * type="radio"> 女 </label></div> 单选框操作
 	 */
-	public void RedioBox() {
+	public void RadioBox() {
 		driver.get("https://www.imooc.com/user/setprofile");
 		this.sleepTime(3000);
 		/**
@@ -114,7 +113,6 @@ public class ActionSelenium {
 		// boolean is_enabled=login_button.isEnabled();
 		// System.out.println(is_enabled);
 		login_button.click();
-
 	}
 
 	/*
@@ -169,7 +167,6 @@ public class ActionSelenium {
 		this.sleepTime(3000);
 		// 头像上传成功后点击确定按钮
 		driver.findElement(By.linkText("确定")).click();
-
 	}
 
 	/*
